@@ -8,6 +8,10 @@ import org.bdd.tools.util.ymlReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class DriverManager {
     private WebDriver driver;
@@ -27,7 +31,7 @@ public class DriverManager {
             mobileDeviceType = reader.getMobileDeviceType();}
     }
 
-    public WebDriver getDriver() {
+    public WebDriver getDriver(){
         if (driver == null) {
             if (testPlatform.equals("Mobile")) {
 //                appiumDriver = setMobileDriver();
@@ -40,10 +44,10 @@ public class DriverManager {
         return driver;
     }
 
-    private void setDesktopDriver() {
+    private void setDesktopDriver(){
         switch (environmentType) {
             case REMOTE:
-                setRemoteDriver_SauceLabs();
+                setRemoteDriver();
                 break;
             default:
                 setLocalDriver();
@@ -61,7 +65,17 @@ public class DriverManager {
         }
     }
 
-    private void setRemoteDriver_SauceLabs() {
+    private void setRemoteDriver(){
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setCapability("browserVersion", "142.0");
+        chromeOptions.setCapability("platformName", "Linux");
+        chromeOptions.setCapability("se:name", scenario.getName());
+        chromeOptions.setCapability("se:sampleMetadata", "Sample metadata value");
+        try {
+            driver = new RemoteWebDriver(new URL("http://192.168.1.11:4444"), chromeOptions);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void closeDriver() {
