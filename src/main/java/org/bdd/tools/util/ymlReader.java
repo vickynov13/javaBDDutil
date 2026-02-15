@@ -71,7 +71,7 @@ public class ymlReader {
 //        }
             ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
             envConfig = (LinkedHashMap<String, Object>) objectMapper.readValue(file, Object.class);
-            System.out.println("Loading file");
+//            System.out.println("Loading file");
         } catch (IOException e) {
             System.out.println(e.getMessage() + " check file format for ymlConfig.yml in root");
             throw new RuntimeException("Exiting Test", e);
