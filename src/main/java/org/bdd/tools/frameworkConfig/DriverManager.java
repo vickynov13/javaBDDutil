@@ -1,5 +1,6 @@
 package org.bdd.tools.frameworkConfig;
 
+import io.cucumber.java.Scenario;
 import org.bdd.tools.enums.Browser;
 import org.bdd.tools.enums.Device;
 import org.bdd.tools.enums.EnvironmentType;
@@ -15,7 +16,7 @@ public class DriverManager {
     private Device mobileDeviceType;
     private EnvironmentType environmentType;
     private Browser browser;
-
+    private Scenario scenario;
 
     public DriverManager(){
         testPlatform = reader.getTestPlatform();
@@ -61,5 +62,15 @@ public class DriverManager {
     }
 
     private void setRemoteDriver_SauceLabs() {
+    }
+
+    public void closeDriver() {
+        if(driver!=null){
+            driver.quit();
+        }
+        System.out.println("===  Driver Quit ===");
+    }
+    public void setScenario(Scenario scenario) {
+        this.scenario = scenario;
     }
 }
