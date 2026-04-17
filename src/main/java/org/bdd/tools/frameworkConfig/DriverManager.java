@@ -16,13 +16,13 @@ import java.net.URL;
 public class DriverManager {
     private WebDriver driver;
     private final String testPlatform;
-    private final ymlReader reader = new ymlReader();
     private Device mobileDeviceType;
-    private EnvironmentType environmentType;
+    private final EnvironmentType environmentType;
     private Browser browser;
     private Scenario scenario;
 
     public DriverManager(){
+        ymlReader reader = new ymlReader();
         testPlatform = reader.getTestPlatform();
         environmentType = reader.getEnvironment();
         if (testPlatform.equals("Desktop")){
